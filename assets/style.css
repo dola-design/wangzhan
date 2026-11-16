@@ -1,0 +1,490 @@
+/* =========================================================
+   0. DESIGN TOKENS — 改这里就能全局换色 / 换字体
+   ========================================================= */
+:root {
+  --bg: #F6F4EF;          /* warm white 暖白背景 */
+  --surface: #EAE6DE;     /* image placeholder 底色 */
+  --ink: #161514;         /* near black 近黑文字 */
+  --muted: #706A61;       /* secondary text 次要文字 */
+  --line: #D8D2C7;        /* hairline 细分隔线 */
+  --accent: #8C6A55;      /* tiny accent 少量强调色 */
+
+  --max: 1240px;
+  --pad: clamp(20px, 5vw, 64px);
+
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "DM Serif Display", Georgia, "Songti SC", "STSong", "SimSun", "Times New Roman", serif;
+}
+
+/* =========================================================
+   1. RESET — 抹平浏览器默认样式
+   ========================================================= */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; }
+ul { list-style: none; margin: 0; padding: 0; }
+h1, h2, h3, p { margin: 0; }
+
+section[id] { scroll-margin-top: 76px; }
+
+/* =========================================================
+   2. UTILITIES — 复用类
+   ========================================================= */
+.container {
+  width: 100%;
+  max-width: var(--max);
+  margin-inline: auto;
+  padding-inline: var(--pad);
+}
+
+.eyebrow {
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* =========================================================
+   3. HEADER
+   ========================================================= */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(246, 244, 239, 0.88);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header-inner {
+  height: 76px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.wordmark {
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.dot { color: var(--accent); }
+
+.site-nav {
+  display: flex;
+  gap: clamp(20px, 3vw, 44px);
+  font-size: 0.82rem;
+}
+
+.site-nav a {
+  position: relative;
+  padding-block: 6px;
+  color: var(--muted);
+  transition: color 0.2s ease;
+}
+
+.site-nav a:hover { color: var(--ink); }
+.site-nav .arrow { font-size: 0.75em; }
+
+.nav-toggle {
+  display: none;
+  background: none;
+  border: 0;
+  padding: 8px 0;
+  cursor: pointer;
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* =========================================================
+   4. HERO
+   ========================================================= */
+.hero {
+  min-height: calc(100svh - 76px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(72px, 11vh, 132px) 40px;
+}
+
+.hero-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(3.2rem, 8.2vw, 8rem);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  max-width: 15ch;
+  margin-block: clamp(28px, 5vw, 56px);
+}
+
+.hero-title em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+.hero-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 40ch) auto;
+  gap: clamp(28px, 5vw, 80px);
+  align-items: end;
+}
+
+.hero-lead {
+  font-size: clamp(1rem, 1.3vw, 1.12rem);
+  line-height: 1.75;
+  color: var(--muted);
+}
+
+.hero-lead strong { color: var(--ink); font-weight: 500; }
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  flex-wrap: wrap;
+}
+
+.button { font-size: 0.85rem; transition: all 0.2s ease; }
+
+.button-primary {
+  background: var(--ink);
+  color: var(--bg);
+  padding: 14px 20px;
+  border: 1px solid var(--ink);
+}
+
+.button-primary:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+.button-text {
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.button-text:hover { color: var(--accent); border-color: var(--accent); }
+
+.scroll-hint {
+  margin-top: clamp(64px, 10vh, 120px);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.scroll-hint span { margin-left: 8px; }
+
+/* =========================================================
+   5. SECTIONS — shared rhythm
+   ========================================================= */
+.section {
+  padding-block: clamp(88px, 12vw, 168px);
+  border-top: 1px solid var(--line);
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(32px, 6vw, 100px);
+  align-items: end;
+  margin-bottom: clamp(48px, 7vw, 96px);
+}
+
+.section-title {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(2.4rem, 5.4vw, 4.8rem);
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-top: 20px;
+}
+
+.section-intro {
+  color: var(--muted);
+  line-height: 1.75;
+  font-size: 0.98rem;
+  max-width: 46ch;
+}
+
+/* =========================================================
+   6. WORK GRID
+   ========================================================= */
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(44px, 5vw, 80px) clamp(24px, 4vw, 64px);
+}
+
+.project-media {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.project:hover .project-media img { transform: scale(1.04); }
+
+.project-meta {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 18px;
+  align-items: baseline;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+
+.project-number {
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.project-info h3 {
+  font-size: 1.05rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.project-info p {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+.project-arrow {
+  font-size: 0.9rem;
+  color: var(--muted);
+  transition: transform 0.2s ease;
+}
+
+.project:hover .project-arrow { transform: translate(3px, -3px); }
+
+/* =========================================================
+   7. ABOUT
+   ========================================================= */
+.about-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 0.8fr);
+  gap: clamp(48px, 8vw, 140px);
+}
+
+.about-copy p {
+  font-size: clamp(1.05rem, 1.5vw, 1.22rem);
+  line-height: 1.8;
+  color: #3A3732;
+}
+
+.about-copy p + p {
+  margin-top: 1.4em;
+  font-size: 1rem;
+  color: var(--muted);
+}
+
+.stats { border-top: 1px solid var(--line); }
+
+.stat {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 20px;
+  padding-block: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.stat-number {
+  font-family: var(--font-serif);
+  font-size: 2.4rem;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  text-align: right;
+  max-width: 14ch;
+}
+
+/* =========================================================
+   8. EXPERTISE
+   ========================================================= */
+.expertise-item {
+  display: grid;
+  grid-template-columns: 70px minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(16px, 3vw, 48px);
+  align-items: baseline;
+  padding-block: clamp(24px, 3vw, 36px);
+  border-top: 1px solid var(--line);
+}
+
+.expertise-item:last-child { border-bottom: 1px solid var(--line); }
+
+.expertise-number {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.expertise-item h3 {
+  font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+.expertise-item p {
+  color: var(--muted);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* =========================================================
+   9. CONTACT + FOOTER
+   ========================================================= */
+.contact-body {
+  display: grid;
+  gap: clamp(32px, 4vw, 56px);
+}
+
+.contact-email {
+  font-family: var(--font-serif);
+  font-size: clamp(1.7rem, 5vw, 4.2rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.3em;
+  width: fit-content;
+  padding-bottom: 0.12em;
+  border-bottom: 1px solid var(--line);
+  transition: border-color 0.2s ease;
+}
+
+.contact-email:hover { border-color: var(--ink); }
+.contact-email span { font-family: var(--font-sans); font-size: 0.32em; }
+
+.socials {
+  display: flex;
+  gap: clamp(20px, 3vw, 36px);
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+}
+
+.socials a {
+  padding-bottom: 3px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.socials a:hover { border-color: var(--ink); }
+
+.site-footer { border-top: 1px solid var(--line); }
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  padding-block: 28px;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.footer-inner a:hover { color: var(--ink); }
+
+/* =========================================================
+   10. SCROLL REVEAL — 由 script.js 触发
+   ========================================================= */
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.reveal.is-visible { opacity: 1; transform: none; }
+
+/* If JavaScript is off, show everything normally */
+.no-js .reveal { opacity: 1; transform: none; }
+
+/* =========================================================
+   11. RESPONSIVE — tablets and phones
+   ========================================================= */
+@media (max-width: 900px) {
+  .hero-bottom,
+  .section-head,
+  .about-body { grid-template-columns: 1fr; align-items: start; }
+
+  .hero-bottom { gap: 32px; }
+}
+
+@media (max-width: 768px) {
+  .nav-toggle { display: inline-flex; }
+
+  .site-nav {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    gap: 0;
+    padding: 8px var(--pad) 24px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .site-nav.is-open { display: flex; }
+
+  .site-nav a {
+    padding-block: 14px;
+    border-bottom: 1px solid var(--line);
+    font-size: 1rem;
+  }
+
+  .hero-title { font-size: clamp(3rem, 12vw, 5rem); }
+
+  .work-grid { grid-template-columns: 1fr; }
+
+  .expertise-item {
+    grid-template-columns: 44px 1fr;
+    gap: 8px 16px;
+  }
+
+  .expertise-item p { grid-column: 2; }
+
+  .footer-inner { flex-direction: column; gap: 8px; }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
